@@ -108,7 +108,11 @@
             editor.innerHTML = editor.innerHTML + '<span class="consonant">'+str[i]+'</span>';
             consonant++;
           }else{
-            editor.innerHTML = editor.innerHTML + '<span class="special">'+str[i]+'</span>';
+            if(str[i] != ' '){
+              editor.innerHTML = editor.innerHTML + '<span class="special">'+str[i]+'</span>';
+            }else{
+              editor.innerHTML = editor.innerHTML + '<span class="special">'+'&nbsp;'+'</span>';
+            }
             special++;
           }
         }
