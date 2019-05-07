@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Word Analysis</title>
+    <style>
+      body{
+        background: #c0dfd9;
+      }
+      #heading{
+        text-align: center;
+        font-size: 60px;
+        letter-spacing: 0.3em;
+        padding: 0;
+        margin: 0.8em 0;
+      }
+      #editor{
+        border: 0.2em solid #1d2120;
+        height: 200px;
+        width: 80%;
+        margin: 0 auto;
+        font-size: 25px;
+        background: #efefef;
+        font-weight: bolder;
+        letter-spacing: 0.2em;
+      }
+      #container{
+        margin: 2em 0;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        font-size: 30px;
+        width: 100%;
+      }
+      .count{
+        width: 350px;
+        color: #1d2120;
+      }
+      .count h1{
+        margin: 0.1em 0;
+        text-align: center;
+      }
+      .count h2{
+        margin: 0;
+        text-align: center;
+      }
+      #vowel{
+        color: #e62739;
+      }
+      #consonant{
+        color: #22264b;
+      }
+      #special{
+        color: #1b9d17;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="heading">
+      Spell Count
+    </h1>
+    <div spellcheck="true" id="editor" contenteditable="true" spellcheck="false"></div>
+    <div id="container">
+      <div class="count">
+        <h1>Vowel</h1>
+        <h2 id="vowel">0</h2>
+      </div>
+      <div class="count">
+        <h1>Consonant</h1>
+        <h2 id="consonant">0</h2>
+      </div>
+      <div class="count">
+        <h1>Special</h1>
+        <h2 id="special">0</h2>
+      </div>
+    </div>
+    <script>
+      var vowel = 0;
+      var special = 0;
+      var consonant = 0;
+      document.execCommand('styleWithCSS', false, true);
+      function analyse(e){
+        a = e.keyCode;
+          if(a == 96 || a == 101 || a == 73 || a == 79 || a == 85 || a == 65 || a == 69 || a == 105 || a == 111 || a == 117){
+            document.execCommand('foreColor', false, '#e62739');
+            vowel++;
+          }else if((a >= 65 && a <= 90) || (a >= 96 && a <= 122)){
+            document.execCommand('foreColor', false, '#22264b');
+            consonant++;
+          }else{
+            document.execCommand('foreColor', false, '#1b9d17');
+            special++;
+          }
+          if(a == 8 || a == 46){
+            e.preventDefault();
+          }
+          document.getElementById('vowel').innerHTML = vowel;
+          document.getElementById('consonant').innerHTML = consonant;
+          document.getElementById('special').innerHTML = special;
+      }
+      document.getElementById('editor').onkeydown = analyse;
+    </script>
+  </body>
+</html>
