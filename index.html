@@ -11,17 +11,31 @@
         font-size: 60px;
         letter-spacing: 0.3em;
         padding: 0;
-        margin: 0.8em 0;
+        margin: 0.6em 0;
+      }
+      #mytext{
+        outline: 0;
+        border: 0;
+        width: 60%;
+        height: 90px;
+        font-size: 18px;
+        margin: 1em 20%;
+        padding: 0.2em;
+        resize: none;
       }
       #editor{
         border: 0.2em solid #1d2120;
-        height: 200px;
+        height: 120px;
         width: 80%;
         margin: 0 auto;
         font-size: 25px;
         background: #efefef;
         font-weight: bolder;
         letter-spacing: 0.2em;
+        display: flex;
+        justify-content: start;
+        flex-direction: row;
+        flex-wrap: wrap;
       }
       #container{
         margin: 2em 0;
@@ -45,13 +59,13 @@
         margin: 0;
         text-align: center;
       }
-      #vowel{
+      .vowel{
         color: #e62739;
       }
-      #consonant{
+      .consonant{
         color: #22264b;
       }
-      #special{
+      .special{
         color: #1b9d17;
       }
     </style>
@@ -60,46 +74,49 @@
     <h1 id="heading">
       Spell Count
     </h1>
-    <div spellcheck="true" id="editor" contenteditable="true" spellcheck="false"></div>
+    <textarea id="mytext" spellcheck="false" placeholder="Enter Text Here"></textarea>
+    <div id="editor"></div>
     <div id="container">
       <div class="count">
         <h1>Vowel</h1>
-        <h2 id="vowel">0</h2>
+        <h2 class="vowel" id="vowel">0</h2>
       </div>
       <div class="count">
         <h1>Consonant</h1>
-        <h2 id="consonant">0</h2>
+        <h2 class="consonant" id="consonant">0</h2>
       </div>
       <div class="count">
         <h1>Special</h1>
-        <h2 id="special">0</h2>
+        <h2 class="special"id="special">0</h2>
       </div>
     </div>
     <script>
-      var vowel = 0;
-      var special = 0;
-      var consonant = 0;
-      document.execCommand('styleWithCSS', false, true);
-      function analyse(e){
-        a = e.keyCode;
-          if(a == 96 || a == 101 || a == 73 || a == 79 || a == 85 || a == 65 || a == 69 || a == 105 || a == 111 || a == 117){
-            document.execCommand('foreColor', false, '#e62739');
+      function analyse(){
+        var vowel = 0;
+        var special = 0;
+        var consonant = 0;
+        str = document.getElementById('mytext').value;
+        console.log(str);
+        editor = document.getElementById('editor');
+        editor.innerHTML = "";
+        for(i=0; i<str.length; i++){
+          a = str.charCodeAt(i);
+          if(a == 97 || a == 101 || a == 73 || a == 79 || a == 85 || a == 65 || a == 69 || a == 105 || a == 111 || a == 117){
+            editor.innerHTML = editor.innerHTML + '<span class="vowel">'+str[i]+'</span>';
             vowel++;
           }else if((a >= 65 && a <= 90) || (a >= 96 && a <= 122)){
-            document.execCommand('foreColor', false, '#22264b');
+            editor.innerHTML = editor.innerHTML + '<span class="consonant">'+str[i]+'</span>';
             consonant++;
           }else{
-            document.execCommand('foreColor', false, '#1b9d17');
+            editor.innerHTML = editor.innerHTML + '<span class="special">'+str[i]+'</span>';
             special++;
           }
-          if(a == 8 || a == 46){
-            e.preventDefault();
-          }
-          document.getElementById('vowel').innerHTML = vowel;
-          document.getElementById('consonant').innerHTML = consonant;
-          document.getElementById('special').innerHTML = special;
+        }
+        document.getElementById('vowel').innerHTML = vowel;
+        document.getElementById('consonant').innerHTML = consonant;
+        document.getElementById('special').innerHTML = special;
       }
-      document.getElementById('editor').onkeypress = analyse;
+      document.getElementById('mytext').oninput = analyse;
     </script>
   </body>
 </html>
