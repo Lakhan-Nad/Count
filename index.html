@@ -25,7 +25,7 @@
       }
       #editor{
         border: 0.2em solid #1d2120;
-        height: 120px;
+        min-height: 120px;
         width: 80%;
         margin: 0 auto;
         font-size: 25px;
@@ -96,7 +96,6 @@
         var special = 0;
         var consonant = 0;
         str = document.getElementById('mytext').value;
-        console.log(str);
         editor = document.getElementById('editor');
         editor.innerHTML = "";
         for(i=0; i<str.length; i++){
